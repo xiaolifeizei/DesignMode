@@ -7,7 +7,14 @@
             http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop-4.0.xsd
             http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
+    <!--开启包扫描-->
     <context:component-scan base-package="com.matrix"/>
 
-    <bean id="date" class="java.util.Date"/>
+    <!--开启aop注解
+        proxy-target-class属性值决定是基于接口的还是基于类的代理被创建
+            1、为true则是基于类的代理将起作用（需要cglib库）
+            2、为false或者省略这个属性，则标准的JDK基于接口的代理将起作用
+        <aop:aspectj-autoproxy proxy-target-class="true"/>
+    -->
+    <aop:aspectj-autoproxy />
 </beans>

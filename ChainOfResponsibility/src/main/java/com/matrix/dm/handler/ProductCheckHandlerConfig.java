@@ -2,6 +2,9 @@ package com.matrix.dm.handler;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.util.StringUtils;
+
+import java.util.Objects;
 
 /**
  * 处理器配置类
@@ -25,4 +28,5 @@ public class ProductCheckHandlerConfig {
      * 是否降级
      */
     private Boolean down;
+
 }
