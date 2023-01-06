@@ -1,4 +1,4 @@
-package com.matrix.factory.function;
+package com.matrix.factory.function.two;
 
 /**
  * 目标对象2
