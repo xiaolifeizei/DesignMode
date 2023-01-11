@@ -1,0 +1,19 @@
+package com.matrix.command.three;
+
+/**
+ * start命令
+ *
+ * @author : cui_feng
+ * @since : 2023-01-11 17:29
+ */
+public class ConcreteCommandStart extends Command{
+
+    public ConcreteCommandStart(Receiver receiver) {
+        super(receiver);
+    }
+
+    @Override
+    protected void execute() {
+        receiver.start();
+    }
+}
