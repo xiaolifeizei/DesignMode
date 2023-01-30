@@ -1,7 +1,7 @@
-package com.matrix.chain.responsibility.handler;
+package com.matrix.chain.responsibility.spring.handler;
 
-import com.matrix.chain.responsibility.entity.Product;
-import com.matrix.chain.responsibility.entity.Result;
+import com.matrix.chain.responsibility.spring.entity.Product;
+import com.matrix.chain.responsibility.spring.entity.Result;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,9 +1,9 @@
-package com.matrix.chain.responsibility.client;
+package com.matrix.chain.responsibility.spring.client;
 
-import com.matrix.chain.responsibility.handler.AbstractCheckHandler;
-import com.matrix.chain.responsibility.entity.Product;
-import com.matrix.chain.responsibility.entity.Result;
-import com.matrix.chain.responsibility.handler.ProductCheckHandlerConfig;
+import com.matrix.chain.responsibility.spring.handler.AbstractCheckHandler;
+import com.matrix.chain.responsibility.spring.entity.Product;
+import com.matrix.chain.responsibility.spring.entity.Result;
+import com.matrix.chain.responsibility.spring.handler.ProductCheckHandlerConfig;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 

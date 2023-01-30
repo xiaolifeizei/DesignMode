@@ -1,10 +1,10 @@
 package com.matrix;
 
 import com.alibaba.fastjson2.JSON;
-import com.matrix.chain.responsibility.client.HandlerClient;
-import com.matrix.chain.responsibility.entity.Product;
-import com.matrix.chain.responsibility.entity.Result;
-import com.matrix.chain.responsibility.handler.ProductCheckHandlerConfig;
+import com.matrix.chain.responsibility.spring.client.HandlerClient;
+import com.matrix.chain.responsibility.spring.entity.Product;
+import com.matrix.chain.responsibility.spring.entity.Result;
+import com.matrix.chain.responsibility.spring.handler.ProductCheckHandlerConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.context.annotation.ComponentScan;

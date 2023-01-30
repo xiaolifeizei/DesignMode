@@ -1,9 +1,9 @@
-package com.matrix.chain.responsibility.handler.impl;
+package com.matrix.chain.responsibility.spring.handler.impl;
 
-import com.matrix.chain.responsibility.constant.ErrorCode;
-import com.matrix.chain.responsibility.entity.Result;
-import com.matrix.chain.responsibility.handler.AbstractCheckHandler;
-import com.matrix.chain.responsibility.entity.Product;
+import com.matrix.chain.responsibility.spring.constant.ErrorCode;
+import com.matrix.chain.responsibility.spring.entity.Result;
+import com.matrix.chain.responsibility.spring.handler.AbstractCheckHandler;
+import com.matrix.chain.responsibility.spring.entity.Product;
 import org.springframework.stereotype.Component;
 
 /**

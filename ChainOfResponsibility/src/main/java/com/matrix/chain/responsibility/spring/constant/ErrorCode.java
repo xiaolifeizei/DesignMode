@@ -1,4 +1,4 @@
-package com.matrix.chain.responsibility.constant;
+package com.matrix.chain.responsibility.spring.constant;
 
 /**
  * 错误码

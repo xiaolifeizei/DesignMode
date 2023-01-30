@@ -1,4 +1,4 @@
-package com.matrix.chain.responsibility.entity;
+package com.matrix.chain.responsibility.spring.entity;
 
 import lombok.Data;
 

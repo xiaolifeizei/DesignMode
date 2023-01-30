@@ -1,9 +1,7 @@
-package com.matrix.chain.responsibility.handler;
+package com.matrix.chain.responsibility.spring.handler;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.util.Objects;
 
 /**
  * 处理器配置类
