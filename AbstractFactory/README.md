@@ -26,9 +26,91 @@
 
   定义具体工厂生产的具体产品对象，实现抽象产品色色中声明的方法
 
-### 三、UML
+UML图如下：
+
+![ab4037bf07a996cb05ce448077d59c4c.png](https://raw.githubusercontent.com/xiaolifeizei/myImages/master/picgo/ab4037bf07a996cb05ce448077d59c4c.png)
+
+### 三、代码说明
+
+#### 1、UML
 
 ![image-20230130101709836](https://raw.githubusercontent.com/xiaolifeizei/myImages/master/picgo/image-20230130101709836.png)
+
+#### 2、核心代码
+
+SubjectFactory是抽象工厂角色，声明了两个方法来创建两种类型的产品
+
+```java
+public interface SubjectFactory {
+    SubjectFirst getSubjectFirst(String type);
+    SubjectSecond getSubjectSecond(String type);
+}
+```
+
+SubjectCategoryAFactory和SubjectCategoryBFactory是具体工厂角色都实现了SubjectFactory接口
+
+```java
+public class SubjectCategoryAFactory implements SubjectFactory {
+    @Override
+    public SubjectFirst getSubjectFirst(String type) {
+        if ("one".equals(type)) {
+            return new SubjectFirstOneImpl();
+        }
+        if ("two".equals(type)) {
+            return new SubjectFirstTwoImpl();
+        }
+        return null;
+    }
+
+    @Override
+    public SubjectSecond getSubjectSecond(String type) {
+        if ("one".equals(type)) {
+            return new SubjectSecondOneImpl();
+        }
+        if ("two".equals(type)) {
+            return new SubjectSecondTwoImpl();
+        }
+        return null;
+    }
+}
+
+public class SubjectCategoryBFactory implements SubjectFactory{
+    @Override
+    public SubjectFirst getSubjectFirst(String type) {
+        if ("one".equals(type)) {
+            return new SubjectFirstOneImpl();
+        }
+
+        if ("two".equals(type)) {
+            return new SubjectFirstTwoImpl();
+        }
+        return null;
+    }
+    @Override
+    public SubjectSecond getSubjectSecond(String type) {
+        if ("one".equals(type)) {
+            return new SubjectSecondOneImpl();
+        }
+
+        if ("two".equals(type)) {
+            return new SubjectSecondTwoImpl();
+        }
+        return null;
+    }
+}
+```
+
+SubjectFirst和SubjectSeconed是抽象产品角色，定义了两种类型的产品
+
+```java
+public interface SubjectFirst {
+    void request();
+}
+
+public interface SubjectSecond {
+    void request();
+}
+```
 
 ### 四、总结
 
