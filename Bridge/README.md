@@ -27,6 +27,197 @@
 
   给出实现化角色接口的具体实现
 
+### 三、代码说明
+
+#### 3.1、UML
+
+![image-20230202145847019](https://raw.githubusercontent.com/xiaolifeizei/myImages/master/picgo/image-20230202145847019.png)
+
+#### 3.2、核心代码
+
+```java
+/**
+ * 接口
+ *
+ * @author : cui_feng
+ * @since : 2023-01-09 14:56
+ */
+public interface Implementor {
+    void request();
+    void response();
+}
+
+/**
+ * 抽象类（桥接类）
+ * 维护了 implementor，二者是聚合关系
+ *
+ * @author : cui_feng
+ * @since : 2023-01-09 14:55
+ */
+public abstract class Abstraction {
+    private final Implementor implementor;
+
+    public Abstraction(Implementor implementor) {
+        this.implementor = implementor;
+    }
+    protected void request() {
+        implementor.request();
+    }
+    protected void response() {
+        implementor.response();
+    }
+    public void show() {
+        System.out.println("do show....");
+    }
+}
+
+/**
+ * 接口实现类
+ *
+ * @author : cui_feng
+ * @since : 2023-01-09 14:58
+ */
+public class ConcreteImplementorFirst implements Implementor {
+    @Override
+    public void request() {
+        System.out.println("the first request....");
+    }
+    @Override
+    public void response() {
+        System.out.println("the first response....");
+    }
+}
+
+/**
+ * 接口实现类
+ *
+ * @author : cui_feng
+ * @since : 2023-01-09 14:58
+ */
+public class ConcreteImplementorSecond implements Implementor {
+    @Override
+    public void request() {
+        System.out.println("the second request....");
+    }
+    @Override
+    public void response() {
+        System.out.println("the second response....");
+    }
+}
+
+/**
+ * 抽象类子类
+ *
+ * @author : cui_feng
+ * @since : 2023-01-09 14:57
+ */
+public class RefindedAbstractionOne extends Abstraction {
+    public RefindedAbstractionOne(Implementor implementor) {
+        super(implementor);
+    }
+    @Override
+    protected void request() {
+        System.out.println("the one request....");
+        super.request();
+    }
+    @Override
+    protected void response() {
+        System.out.println("the one response....");
+        super.response();
+    }
+}
+
+/**
+ * 抽象类子类
+ *
+ * @author : cui_feng
+ * @since : 2023-01-09 14:57
+ */
+public class RefindedAbstractionTwo extends Abstraction {
+    public RefindedAbstractionTwo(Implementor implementor) {
+        super(implementor);
+    }
+    @Override
+    protected void request() {
+        System.out.println("the two request....");
+        super.request();
+    }
+    @Override
+    protected void response() {
+        System.out.println("the two response....");
+        super.response();
+    }
+}
+
+/**
+ * 使用
+ * 把抽象（Abstraction）与行为实现（Implementation）分离开来，
+ * 从而可以保持各部分的独立性以及他们的功能扩展，通过桥接模式可以使
+ * 两种类型相互排列组合，极大的提供了系统的灵活性
+ *
+ * @author : cui_feng
+ * @since : 2023-01-09 14:55
+ */
+public class Client {
+
+    public static void main(String[] args) {
+        Abstraction oneFist = new RefindedAbstractionOne(new ConcreteImplementorFirst());
+        Abstraction oneSecond = new RefindedAbstractionOne(new ConcreteImplementorSecond());
+        Abstraction twoFirst = new RefindedAbstractionTwo(new ConcreteImplementorFirst());
+        Abstraction twoSecond = new RefindedAbstractionTwo(new ConcreteImplementorSecond());
+
+        oneFist.request();
+        oneFist.response();
+        oneFist.show();
+
+        System.out.println("=============================================");
+
+        oneSecond.request();
+        oneSecond.response();
+        oneSecond.show();
+
+        System.out.println("=============================================");
+
+        twoFirst.request();
+        twoFirst.response();
+        twoFirst.show();
+
+        System.out.println("=============================================");
+
+        twoSecond.request();
+        twoSecond.response();
+        twoSecond.show();
+    }
+}
+
+// ===============================================================================
+Connected to the target VM, address: '127.0.0.1:60243', transport: 'socket'
+the one request....
+the first request....
+the one response....
+the first response....
+do show....
+=============================================
+the one request....
+the second request....
+the one response....
+the second response....
+do show....
+=============================================
+the two request....
+the first request....
+the two response....
+the first response....
+do show....
+=============================================
+the two request....
+the second request....
+the two response....
+the second response....
+do show....
+Disconnected from the target VM, address: '127.0.0.1:60243', transport: 'socket'
+```
+
 ### 四、总结
 
 桥接模式通过的将继承改为组合的方式来解决一个类在两个维度上的变化问题（适配器模式只在一个维度实现继承），所以不会因为多维度、多层次继承导致系统类的个数急剧增加，这就让构件的抽象化角色和具体化角色之间增加了更多的灵活性。

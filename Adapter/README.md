@@ -46,6 +46,300 @@
 
   通过包装一个需要适配的对象，把原接口转换成目标接口。
 
+### 三、代码说明
+
+#### 3.1、类适配器
+
+**1、UML**
+
+![image-20230202143554242](https://raw.githubusercontent.com/xiaolifeizei/myImages/master/picgo/image-20230202143554242.png)
+
+**2、核心代码**
+
+```java
+/**
+ * 目标类，被适配的类
+ *
+ * @author : cui_feng
+ * @since : 2023-01-09 13:35
+ */
+public class Adaptee {
+
+    public void request() {
+        System.out.println("do request....");
+    }
+}
+
+/**
+ * response接口，目标接口
+ *
+ * @author : cui_feng
+ * @since : 2023-01-09 13:38
+ */
+public interface Target {
+
+    void response();
+}
+
+/**
+ * 类适配器
+ *
+ * @author : cui_feng
+ * @since : 2023-01-09 13:49
+ */
+public class ClassAdapter extends Adaptee implements Target {
+    @Override
+    public void response() {
+        super.request();
+    }
+}
+
+/**
+ * Response实现类
+ *
+ * @author : cui_feng
+ * @since : 2023-01-09 13:39
+ */
+public class TargetImpl implements Target {
+
+    @Override
+    public void response() {
+        System.out.println("do response....");
+    }
+}
+
+/**
+ * 使用
+ * 适配器继承Adaptee类同时实现Target接口，这种方式无法对Adaptee的子类进行适配
+ *
+ * @author : cui_feng
+ * @since : 2023-01-09 13:42
+ */
+public class Client {
+    private static void todo(Target target) {
+        target.response();
+    }
+
+    public static void main(String[] args) {
+        ClassAdapter classAdapter = new ClassAdapter();
+        todo(classAdapter);
+    }
+}
+
+// =============================================================================
+Connected to the target VM, address: '127.0.0.1:63465', transport: 'socket'
+do request....
+Disconnected from the target VM, address: '127.0.0.1:63465', transport: 'socket'
+```
+
+#### 3.2、接口适配器
+
+接口适配器是一个特殊的使用方式，主要是简化开发，只需要实现需要的方法即可
+
+**1、UML**
+
+![image-20230202144001736](https://raw.githubusercontent.com/xiaolifeizei/myImages/master/picgo/image-20230202144001736.png)
+
+**2、核心代码**
+
+```java
+/**
+ * @author : cui_feng
+ * @since : 2023-01-09 14:23
+ */
+public interface Target {
+    void methodOne();
+    void methodTwo();
+    void methodThree();
+    void methodFour();
+}
+
+/**
+ * 接口适配器
+ * 实现Target接口中的所有方法
+ *
+ * @author : cui_feng
+ * @since : 2023-01-09 14:29
+ */
+public class InterfaceAdapter implements Target{
+    @Override
+    public void methodOne() {
+    }
+
+    @Override
+    public void methodTwo() {
+    }
+
+    @Override
+    public void methodThree() {
+    }
+
+    @Override
+    public void methodFour() {
+    }
+}
+
+/**
+ * 使用
+ *
+ * @author : cui_feng
+ * @since : 2023-01-09 14:27
+ */
+public class Client {
+
+    // 只需要方法三
+    private static void todoThree(Target target) {
+        target.methodThree();
+    }
+
+    // 只需要方法二
+    private static void todoTwo(Target target) {
+        target.methodTwo();
+    }
+
+    public static void main(String[] args) {
+
+        // 使用传统方式
+        todoThree(new Target() {
+            @Override
+            public void methodOne() {
+            }
+            @Override
+            public void methodTwo() {
+            }
+            @Override
+            public void methodThree() {
+                System.out.println("do methodThree....");
+            }
+
+            @Override
+            public void methodFour() {
+            }
+        });
+
+        todoTwo(new Target() {
+            @Override
+            public void methodOne() {
+            }
+            @Override
+            public void methodTwo() {
+                System.out.println("do methodTwo....");
+            }
+            @Override
+            public void methodThree() {
+            }
+            @Override
+            public void methodFour() {
+            }
+        });
+
+        System.out.println("=============================================");
+
+        // 使用接口适配器
+        todoThree(new InterfaceAdapter() {
+            @Override
+            public void methodThree() {
+                System.out.println("do methodThree....");
+            }
+        });
+
+        todoTwo(new InterfaceAdapter(){
+            @Override
+            public void methodTwo() {
+                System.out.println("do methodTwo....");
+            }
+        });
+    }
+}
+```
+
+#### 3.3、对象适配器
+
+适配器中持有Adaptee对象并实现Target接口，优先推荐这种方式
+
+**1、UML**
+
+![image-20230202144500802](https://raw.githubusercontent.com/xiaolifeizei/myImages/master/picgo/image-20230202144500802.png)
+
+**2、核心代码**
+
+```java
+/**
+ * 目标类
+ *
+ * @author : cui_feng
+ * @since : 2023-01-09 13:35
+ */
+public class Adaptee {
+    public void request() {
+        System.out.println("do request....");
+    }
+}
+
+/**
+ * response接口
+ *
+ * @author : cui_feng
+ * @since : 2023-01-09 13:38
+ */
+public interface Target {
+    void response();
+}
+
+/**
+ * 对象适配器
+ *
+ * @author : cui_feng
+ * @since : 2023-01-09 13:40
+ */
+public class ObjectAdapter implements Target {
+    // 组合的方式，持有一个Adaptee对象，通过调用Adaptee的方法实现适配
+    @Getter
+    private final Adaptee adaptee;
+
+    public ObjectAdapter(Adaptee adaptee){
+        this.adaptee = adaptee;
+    }
+
+    @Override
+    public void response() {
+        adaptee.request();
+    }
+}
+
+/**
+ * Response实现类
+ *
+ * @author : cui_feng
+ * @since : 2023-01-09 13:39
+ */
+public class TargetImpl implements Target {
+    @Override
+    public void response() {
+        System.out.println("do response....");
+    }
+}
+
+/**
+ * 使用
+ * 适配器中持有Adaptee对象并实现Target接口，优先推荐这种方式
+ *
+ * @author : cui_feng
+ * @since : 2023-01-09 13:42
+ */
+public class Client {
+    private static void todo(Target target) {
+        target.response();
+    }
+
+    public static void main(String[] args) {
+        Adaptee adaptee = new Adaptee();
+        ObjectAdapter objectAdapter = new ObjectAdapter(adaptee);
+        todo(objectAdapter);
+    }
+}
+```
+
 ### 四、总结
 
 三种适配器模式，本质上是现有的不兼容的接口转换为需要的接口。
